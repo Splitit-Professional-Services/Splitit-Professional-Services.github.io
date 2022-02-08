@@ -7,79 +7,80 @@ layout: default
 <h1> Simple HTML page with upstream messaging </h1>
 
 <p>Create a simple HTML page with multiple product prices, and add a single customized Upstream Messaging Placement Element that changes based on the price selected. For example, if the page has options for $100, $250, and $500, and the element is configured with 6 installments:
-<ul>
-  <li>If the user selects the $100 option, we’d expect to see the element display $17/month.</li>
-  <li>If the user selects the $250 option, we’d expect to see the element display $42/month.</li>
-  <li>If the user selects the $500 option, we’d expect to see the element display $83/month.</li>
-</ul>
-<p>
-The number of amounts to choose from, the number of installments to configure, and the customizations done to the element are up to you.
-</p>
-<p>
-Documentation for Upstream Messaging is [here](https://developers.splitit.com/products/upstream-messaging)
-</p>
+  <ul>
+    <li>If the user selects the $100 option, we’d expect to see the element display $17/month.</li>
+    <li>If the user selects the $250 option, we’d expect to see the element display $42/month.</li>
+    <li>If the user selects the $500 option, we’d expect to see the element display $83/month.</li>
+  </ul>
+  <p>
+    The number of amounts to choose from, the number of installments to configure, and the customizations done to the element are up to you.
+  </p>
+  <p>
+    Documentation for Upstream Messaging is [here](https://developers.splitit.com/products/upstream-messaging)
+  </p>
 
-<h2> Goal </h2>
-<p>The goals of this exercise are to:
-<ol>
-  <li>Create a sharable web page that can be viewed.</li>
-  <li>Implement Upstream Messaging</li>
-  <li>Use Javascript to manipluate the Upstream Messaging element to react to a user selection</li>
-</ol>
+  <h2> Goal </h2>
+  <p>The goals of this exercise are to:
+    <ol>
+      <li>Create a sharable web page that can be viewed.</li>
+      <li>Implement Upstream Messaging</li>
+      <li>Use Javascript to manipluate the Upstream Messaging element to react to a user selection</li>
+    </ol>
 
-<p>If you have any quesitons, please reach out.</p>
+    <p>If you have any quesitons, please reach out.</p>
 
-<hr>
+    <hr>
 
-<h1>Upstream Messaging Placement Element</h1>
-<form method="post" action="checkout.php">
-<fieldset id="splititContainer">
-<div>
-  <legend>Select a Price: </legend>
-  <input type="radio" name="radio-1" id="radio-1" value="100" checked="true">
-  <label for="radio-1">$100</label>
-</div>
-<div>
-  <input type="radio" name="radio-1" id="radio-2" value="250">
-  <label for="radio-2">$250</label>
-</div>
-<div>
-  <input type="radio" name="radio-1" id="radio-3" value="500">
-  <label for="radio-3">$500</label>
-</div>
+    <h1>Upstream Messaging Placement Element</h1>
+    <form method="post" action="checkout.php">
+      <fieldset id="splititContainer">
+        <div>
+          <legend>Select a Price: </legend>
+          <input type="radio" name="radio-1" id="radio-1" value="100" checked="true">
+          <label for="radio-1">$100</label>
+        </div>
+        <div>
+          <input type="radio" name="radio-1" id="radio-2" value="250">
+          <label for="radio-2">$250</label>
+        </div>
+        <div>
+          <input type="radio" name="radio-1" id="radio-3" value="500">
+          <label for="radio-3">$500</label>
+        </div>
 
-<div id="splitit-container" data-splitit="true"
-data-splitit-amount="1000"
-data-splitit-num-installments="6"
-data-splitit-type="product-description">
-</div>
-<div class="splitit-design-classic">
-  <button id="splitit-btn-pay" class="splitit-payment-button" type="submit">Check Out</button>
-</div>
-</fieldset>
+        <div id="splitit-container" data-splitit="true"
+        data-splitit-amount="1000"
+        data-splitit-num-installments="6"
+        data-splitit-type="product-description">
+      </div>
+      <div class="splitit-design-classic">
+        <button id="splitit-btn-pay" class="splitit-payment-button" type="submit">Check Out</button>
+      </div>
+    </fieldset>
 
-</form>
-
-
-<script>
-(function(i,s,o,g,r,a,m){i['SplititObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window, document, 'script', '//upstream.production.splitit.com/v1/dist/upstream-messaging.js?v=1', 'splitit');
-splitit('init', { apiKey:  '66fd9cbe-9491-491a-808f-9f268c894ef1', lang: 'en', currency: 'USD', currencySymbol: '$', debug: false });
-</script>
+  </form>
 
 
-<script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['SplititObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window, document, 'script', '//upstream.production.splitit.com/v1/dist/upstream-messaging.js?v=1', 'splitit');
+    splitit('init', { apiKey:  '66fd9cbe-9491-491a-808f-9f268c894ef1', lang: 'en', currency: 'USD', currencySymbol: '$', debug: false });
+  </script>
 
-$( document ).ready(function() {
-console.log('ready!!');
-//Simple jQuery script to react to the input elements, and refresh the UM UI on change
-$("input[type='radio']").click(function(){
-var radioValue = $("input[name='radio-1']:checked").val();
-$('#splitit-container').attr('data-splitit-amount',radioValue);
-splitit.ui.refresh();
 
-});
+  <script>
 
-</script>
+    $( document ).ready(function() {
+      console.log('ready!!');
+      //Simple jQuery script to react to the input elements, and refresh the UM UI on change
+      $("input[type='radio']").click(function(){
+        var radioValue = $("input[name='radio-1']:checked").val();
+        $('#splitit-container').attr('data-splitit-amount',radioValue);
+        splitit.ui.refresh();
+
+      });
+    });
+
+    </script>
