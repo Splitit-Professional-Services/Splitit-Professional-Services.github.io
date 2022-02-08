@@ -36,16 +36,16 @@ Documentation for Upstream Messaging is [here](https://developers.splitit.com/pr
 <fieldset id="splititContainer">
 <div>
   <legend>Select a Price: </legend>
-  <input type="radio" name="radio-1" id="radio-1" value="1000" checked="true">
-  <label for="radio-1">$1000</label>
+  <input type="radio" name="radio-1" id="radio-1" value="100" checked="true">
+  <label for="radio-1">$100</label>
 </div>
 <div>
-  <input type="radio" name="radio-1" id="radio-2" value="2500">
-  <label for="radio-2">$2500</label>
+  <input type="radio" name="radio-1" id="radio-2" value="250">
+  <label for="radio-2">$250</label>
 </div>
 <div>
-  <input type="radio" name="radio-1" id="radio-3" value="5000">
-  <label for="radio-3">$5000</label>
+  <input type="radio" name="radio-1" id="radio-3" value="500">
+  <label for="radio-3">$500</label>
 </div>
 
 <div id="splitit-container" data-splitit="true"
@@ -60,16 +60,6 @@ data-splitit-type="product-description">
 
 </form>
 
-
-<script>
-(function(i,s,o,g,r,a,m){i['SplititObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window, document, 'script', '//upstream.production.splitit.com/v1/dist/upstream-messaging.js?v=1', 'splitit');
-splitit('init', { apiKey:  'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', lang: 'en', currency: 'USD', currencySymbol: '$', debug: false });
-</script>
-
-
 <script>
 
 $( document ).ready(function() {
@@ -82,5 +72,12 @@ splitit.ui.refresh();
 
 });
 
+</script>
 
+<script>
+(function(i,s,o,g,r,a,m){i['SplititObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window, document, 'script', '//upstream.production.splitit.com/v1/dist/upstream-messaging.js?v=1', 'splitit');
+splitit('init', { apiKey:  '66fd9cbe-9491-491a-808f-9f268c894ef1', lang: 'en', currency: 'USD', currencySymbol: '$', debug: false });
 </script>
