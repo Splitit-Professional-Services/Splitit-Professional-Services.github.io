@@ -1,3 +1,6 @@
+---
+layout: default
+---
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -70,7 +73,7 @@ splitit('init', { apiKey:  'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', lang: 'en', c
 <script>
 
 $( document ).ready(function() {
-
+console.log('ready!!');
 //Simple jQuery script to react to the input elements, and refresh the UM UI on change
 $("input[type='radio']").click(function(){
 var radioValue = $("input[name='radio-1']:checked").val();
