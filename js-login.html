@@ -9,33 +9,35 @@ layout: default
 <p>This is the first step in creating and executing an installment plan - getting a SessionID. For this exercise, you will need to:
   <ul>
     <li>Provide a button which, when clicked, will execute a script to call the login API</li>
-    <li>Print the SessionID </p>
-  </ul>
+    <li>Print the SessionID </li>
+    <li>Documentation for /Login is <a href="https://developers.splitit.com/api/v1/login"here</a></li>
+    </ul>
+  </p>
 
 
 
-<div id="tgt"></div>
-<button id="login">Click to send the call to /Login</button>
+  <div id="tgt"></div>
+  <button id="login">Click to send the call to /Login</button>
 
 
-<script>
-  var settings = {
-    "url": "https://webapi.sandbox.splitit.com/api/Login?format=json",
-    "method": "POST",
-    "timeout": 0,
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "data": JSON.stringify({
-      "UserName": "APIUser000032970",
-      "Password": "iY5ne6OCFHFdVbt8WREVwHAGA5TcJ4YBfX5KQVAiTrV6Dj6P4o"
-    }),
-  };
+  <script>
+    var settings = {
+      "url": "https://webapi.sandbox.splitit.com/api/Login?format=json",
+      "method": "POST",
+      "timeout": 0,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "data": JSON.stringify({
+        "UserName": "APIUser000032970",
+        "Password": "iY5ne6OCFHFdVbt8WREVwHAGA5TcJ4YBfX5KQVAiTrV6Dj6P4o"
+      }),
+    };
 
-  $('#login').click(function(){
-    $.ajax(settings).done(function (response) {
-      $('#tgt').text('SessionID = ' + response.SessionId);
+    $('#login').click(function(){
+      $.ajax(settings).done(function (response) {
+        $('#tgt').text('SessionID = ' + response.SessionId);
+      });
     });
-  });
 
-</script>
+  </script>
