@@ -1,0 +1,99 @@
+---
+layout: default
+---
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<h1> Calling Login with Javascipt (jQuery) </h1>
+
+<p>This is the first step in creating and executing an installment plan - getting a SessionID. For this exercise, you will need to:
+  <ul>
+    <li>Provide a button which, when clicked, will execute a script to call the login API</li>
+    <li>Print the SessionID </p>
+  </ul>
+
+
+
+<div id="tgt"></div>
+<button id="login">Click to send the call to /Login</button>
+
+
+<script>
+  var login = {
+    "url": "https://webapi.sandbox.splitit.com/api/Login?format=json",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify({
+      "UserName": "APIUser000032970",
+      "Password": "iY5ne6OCFHFdVbt8WREVwHAGA5TcJ4YBfX5KQVAiTrV6Dj6P4o"
+    }),
+  };
+  //Immediatly call Login this time
+  $.ajax(login).done(function (response) {
+    $('#tgt').text('SessionID = ' + response.SessionId);
+  });
+
+  //Now, let's set up the initiate call
+  var initiate = {
+    "url": "https://webapi.sandbox.splitit.com/api/InstallmentPlan/Initiate?format=json",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify({
+      "RequestHeader": {
+        //Use the SessionID retrieved from the above /Login call
+        "SessionId": response.SessionId,
+        "ApiKey": "66fd9cbe-9491-491a-808f-9f268c894ef1"
+      },
+      "PlanData": {
+        "Amount": {
+          "Value": 50,
+          "CurrencyCode": "USD"
+        },
+        "NumberOfInstallments": 3,
+        "RefOrderNumber": "merchant_invoice_id",
+        "AutoCapture": false,
+        "ExtendedParams": {
+          "AnyParameterKey1": "AnyParameterVal1",
+          "AnyParameterKey2": "AnyParameterVal2"
+        }
+      },
+      "BillingAddress": {
+        "AddressLine": "1 street",
+        "AddressLine2": "Appartment 1",
+        "City": "New York",
+        "State": "VA",
+        "Country": "USA",
+        "Zip": "10016"
+      },
+      "ConsumerData": {
+        "FullName": "John Smith",
+        "Email": "JohnS@splitit.com",
+        "PhoneNumber": "1-844-775-4848",
+        "CultureName": "en-us"
+      },
+      "PaymentWizardData": {
+        "RequestedNumberOfInstallments": "1,2,3,4,5,6,7,8,9,10,11,12"
+      },
+      "RedirectUrls": {
+        "Succeeded": "http://localhost",
+        "Failed": "http://localhost",
+        "Canceled": "http://localhost"
+      },
+      "EventsEndpoints": {
+        "CreateSucceeded": "https://www.async-success.com/"
+      }
+    }),
+  };
+
+  $.ajax(initiate).done(function (response) {
+    console.log(response);
+  });
+
+
+</script>
