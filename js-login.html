@@ -37,6 +37,7 @@ layout: default
     $('#login').click(function(){
       $.ajax(settings).done(function (response) {
         $('#tgt').text('SessionID = ' + response.SessionId);
+        $('#login').prop("disabled",true);
       });
     });
 
