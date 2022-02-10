@@ -54,11 +54,12 @@ layout: default
         "PlanData": {
           "Amount": {
             "Value": 50,
-            "CurrencyCode": "USD"
+            "CurrencyCode": "USD",
+            "TestMode":"Fast"
           },
           "NumberOfInstallments": 3,
           //Just creating a unique indicator for this test
-          "RefOrderNumber": "splitit-professional-services" + Math.floor(100000 + Math.random() * 900000),
+          "RefOrderNumber": "splitit-professional-services:" + Math.floor(100000 + Math.random() * 900000),
           "AutoCapture": false,
           "ExtendedParams": {
             "AnyParameterKey1": "AnyParameterVal1",
