@@ -92,12 +92,12 @@ layout: default
         }
       }),
     };
-$('#engage').click(function(){
-    //Call /Initiate with a button click
-    $.ajax(initiate).done(function (initResponse) {
-      $('#responseDiv').html("<pre>"+JSON.stringify(initResponse,undefined, 2) +"</pre>");
+    $('#engage').click(function(){
+      //Call /Initiate with a button click
+      $.ajax(initiate).done(function (initResponse) {
+        $('#responseDiv').html(JSON.stringify(initResponse,undefined, 2));
+      });
     });
   });
-});
 </script>
-<div id="responseDiv"></div>
+<div><pre id="responseDiv">Response will print here</pre></div>
