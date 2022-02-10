@@ -6,16 +6,19 @@ layout: default
 
 <h1> Calling Login with Javascipt (jQuery) </h1>
 
-<p>Provide a button which, when clicked, will execute a script to call the login API and return the SessionID </p>
+<p>This is the first step in creating and executing an installment plan - getting a SessionID. For this exercise, you will need to:
+  <ul>
+    <li>Provide a button which, when clicked, will execute a script to call the login API</li>
+    <li>Print the SessionID </p>
+  </ul>
 
 
 
-<p id="hw">Hello World</p>
-<button id="login">Run Login call</button>
+<div id="tgt"></div>
+<button id="login">Click to send the call to /Login</button>
 
 
 <script>
-
   var settings = {
     "url": "https://webapi.sandbox.splitit.com/api/Login?format=json",
     "method": "POST",
@@ -31,7 +34,7 @@ layout: default
 
   $('#login').click(function(){
     $.ajax(settings).done(function (response) {
-      $('#hw').text('SessionID = ' + response.SessionId);
+      $('#tgt').text('SessionID = ' + response.SessionId);
     });
   });
 
