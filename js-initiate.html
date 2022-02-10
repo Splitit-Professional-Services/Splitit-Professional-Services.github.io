@@ -6,13 +6,16 @@ layout: default
 
 <h1> Calling Login with Javascipt (jQuery) </h1>
 
-<p>This is the first step in creating and executing an installment plan - getting a SessionID. For this exercise, you will need to:
+<p>This is the first step in creating and executing an installment plan - getting a SessionId. For this exercise, you will need to:
   <ul>
     <li>Call the login API</li>
-    <li>Use the SessionID and then call Initiate</li>
+    <li>Use the SessionId and then call Initiate</li>
     <li>Print out the reponse</li>
   </ul>
 </p>
+
+<div id="tgt"></div>
+<button id="engage">Call initiate!</button>
 
 
 <script>
@@ -28,10 +31,12 @@ layout: default
       "Password": "iY5ne6OCFHFdVbt8WREVwHAGA5TcJ4YBfX5KQVAiTrV6Dj6P4o"
     }),
   };
-  //Immediatly call Login this time...
-  $.ajax(login).done(function (response) {
-    $('#tgt').text('SessionID = ' + response.SessionId);
 
+  //Immediatly call Login this time...
+  $.ajax(login).done(function (login) {
+    //Print the SessionId to be sure we got it
+    $('#tgt').text("SessionId =" + login.SessionId);
+    //The set up initiate (we need the SessionId)
     //...and, set up the initiate call
     var initiate = {
       "url": "https://webapi.sandbox.splitit.com/api/InstallmentPlan/Initiate?format=json",
@@ -42,8 +47,8 @@ layout: default
       },
       "data": JSON.stringify({
         "RequestHeader": {
-          //Using the SessionID retrieved from the above /Login call
-          "SessionId": response.SessionId,
+          //Using the SessionId retrieved from the above /Login call
+          "SessionId": login.SessionId,
           "ApiKey": "66fd9cbe-9491-491a-808f-9f268c894ef1"
         },
         "PlanData": {
@@ -87,12 +92,12 @@ layout: default
         }
       }),
     };
-    //and then call /Initiate using that SessionID
+$('#engage').click(function(){
+    //Call /Initiate with a button click
     $.ajax(initiate).done(function (initResponse) {
       $('#responseDiv').html("<pre>"+JSON.stringify(initResponse,undefined, 2) +"</pre>");
     });
-
   });
-
+});
 </script>
 <div id="responseDiv"></div>
