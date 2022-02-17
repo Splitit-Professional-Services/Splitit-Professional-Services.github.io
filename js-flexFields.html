@@ -1,0 +1,155 @@
+---
+layout: default
+---
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<h1> Using Flex Fields with jQuery </h1>
+
+<p>Now that you've called /Login (Step 1) and /Initiate (with Step 2) let's use that info to instantiate Flex Fields:
+  <ul>
+    <li>Call the login API</li>
+    <li>Use the SessionId and then call Initiate</li>
+    <li>Print out the reponse</li>
+  </ul>
+</p>
+
+
+<script>
+  var SplititToken = '';
+  var login = {
+    "url": "https://webapi.sandbox.splitit.com/api/Login?format=json",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify({
+      "UserName": "APIUser000032970",
+      "Password": "iY5ne6OCFHFdVbt8WREVwHAGA5TcJ4YBfX5KQVAiTrV6Dj6P4o"
+    }),
+  };
+
+  //Immediatly call Login this time...
+  $.ajax(login).done(function (login) {
+    var initiate = {
+      "url": "https://webapi.sandbox.splitit.com/api/InstallmentPlan/Initiate?format=json",
+      "method": "POST",
+      "timeout": 0,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "data": JSON.stringify({
+        "RequestHeader": {
+          //Using the SessionId retrieved from the above /Login call
+          "SessionId": login.SessionId,
+          "ApiKey": "66fd9cbe-9491-491a-808f-9f268c894ef1"
+        },
+        "PlanData": {
+          "Amount": {
+            "Value": 350,
+            "CurrencyCode": "USD",
+            "AutoCapture": true
+          },
+          "NumberOfInstallments": 7,
+          //Just creating a unique indicator for this test
+          "RefOrderNumber": "splitit-PS-Test:" + Math.floor(100000 + Math.random() * 900000),
+          "AutoCapture": false
+        },
+        /*          "PaymentWizardData": {
+        "RequestedNumberOfInstallments":"3,6,9,12"
+      }
+      */        }),
+    };
+
+    //Call initiate immediatly this time to get the PublicToken
+    $.ajax(initiate).done(function (initResponse) {
+      //Set the value of the token so we can use it below
+      publicToken = initResponse.PublicToken;
+    });
+  });
+</script>
+
+<!-- Flex Fields starts here -->
+
+<div class="splitit-design-classic" id="splitit-card-data">
+  <div class="splitit-cc-group">
+    <div id="splitit-cardholder-name"></div>
+    <div id="splitit-card-number"></div>
+    <div id="splitit-expiration-date"></div>
+    <div id="splitit-cvv"></div>
+    <div class="splitit-cc-group-separator"></div>
+  </div>
+  <div id="splitit-installment-picker"></div>
+  <div id="splitit-error-box"></div>
+  <div id="splitit-terms-conditions"></div>
+  <button id="splitit-btn-pay"></button>
+</div>
+
+<h2 id="messageDiv"></h2>
+
+<script src="https://flexfields.sandbox.splitit.com/v2.0/splitit.flex-fields.sdk.js"></script>
+<script>
+  var flexFields = Splitit.FlexFields.setup({
+    // debug: true, // <<-- uncomment for extended errors
+    culture: "en-US",
+    container: "#splitit-card-data",
+    fields: {
+      cardholderName: {
+        selector: "#splitit-cardholder-name"
+      },
+      number: {
+        selector: "#splitit-card-number"
+      },
+      cvv: {
+        selector: "#splitit-cvv"
+      },
+      expirationDate: {
+        selector: "#splitit-expiration-date"
+      }
+    },
+    installmentPicker: {
+      selector: "#splitit-installment-picker",
+      //        ui:"buttons",
+      //					ui:"single",
+      //					ui:"slider",
+      //					ui:"dropdown",
+    },
+    termsConditions: {
+      selector: "#splitit-terms-conditions"
+    },
+    errorBox: {
+      selector: "#splitit-error-box"
+    },
+    paymentButton: {
+      selector: "#splitit-btn-pay"
+    },
+    billingAddress: {
+      addressLine: "260 Madison Avenue.",
+      addressLine2: "Apartment 1",
+      city: "New York",
+      state: "NY",
+      country: "USA",
+      zip: "10016"
+    },
+    consumerData: {
+      fullName: "John Smith",
+      email: "JohnS@splitit.com",
+      phoneNumber: "1-844-775-4848",
+      cultureName: "en-us"
+    }
+  })
+  .ready(function () {
+    flexFields.setPublicToken(publicToken); //From initiate call above
+    flexFields.show();
+  })
+  .onSuccess(function (result) {
+    // Respond here if payment goes well (Flex Fields object descriptions are below)
+    flexFields.hide();
+    $('#messageDiv').html("<h2>Success!</h2> Installment Plan Number is: <a target='_blank' href='https://admin.sandbox.splitit.com/transactions/"+ result.installmentPlan.installmentPlanNumber +"'> "+ result.installmentPlan.installmentPlanNumber +"</a>" );
+  })
+  .onError(function (err) {
+    // Payment failed, error object will have the details (Flex Fields object descriptions are below)
+
+  });
+</script>
