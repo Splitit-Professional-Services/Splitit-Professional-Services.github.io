@@ -65,7 +65,7 @@ layout: default
     //Call initiate immediatly this time to get the PublicToken
     $.ajax(initiate).done(function (initResponse) {
       //Set the value of the token so we can use it below
-      publicToken = initResponse.PublicToken;
+      SplititToken = initResponse.PublicToken;
     });
   });
 </script>
@@ -140,7 +140,7 @@ layout: default
     }
   })
   .ready(function () {
-    flexFields.setPublicToken(publicToken); //From initiate call above
+    flexFields.setPublicToken(SplititToken); //From initiate call above
     flexFields.show();
   })
   .onSuccess(function (result) {
