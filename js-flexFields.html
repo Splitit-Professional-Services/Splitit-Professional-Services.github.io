@@ -48,13 +48,12 @@ layout: default
         "PlanData": {
           "Amount": {
             "Value": 350,
-            "CurrencyCode": "USD",
-            "AutoCapture": true
+            "CurrencyCode": "USD"
           },
           "NumberOfInstallments": 7,
           //Just creating a unique indicator for this test
           "RefOrderNumber": "splitit-PS-Test:" + Math.floor(100000 + Math.random() * 900000),
-          "AutoCapture": false
+          "AutoCapture": true
         },
         /*          "PaymentWizardData": {
         "RequestedNumberOfInstallments":"3,6,9,12"
